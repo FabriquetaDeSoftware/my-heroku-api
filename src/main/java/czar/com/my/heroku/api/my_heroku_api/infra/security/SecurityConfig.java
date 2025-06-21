@@ -32,6 +32,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/sign-in").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/sign-up").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/refresh-token/*").permitAll()
+                        .requestMatchers("/docs/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
