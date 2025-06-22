@@ -1,6 +1,7 @@
 package czar.com.my.heroku.api.my_heroku_api.controllers;
 
 import czar.com.my.heroku.api.my_heroku_api.dto.response.ListAllContainersResponseDto;
+import czar.com.my.heroku.api.my_heroku_api.dto.response.ListImagesResponseDto;
 import czar.com.my.heroku.api.my_heroku_api.dto.response.ListRunningContainersResponseDto;
 import czar.com.my.heroku.api.my_heroku_api.services.ContainerService;
 import lombok.RequiredArgsConstructor;
@@ -32,4 +33,12 @@ public class ContainerController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("list-all-images")
+    public ResponseEntity<List<ListImagesResponseDto>> listAllImages() {
+        List<ListImagesResponseDto> response = this.containerService.listAllImages();
+
+        return ResponseEntity.ok(response);
+    }
+
 }

@@ -1,6 +1,7 @@
 package czar.com.my.heroku.api.my_heroku_api.services;
 
 import czar.com.my.heroku.api.my_heroku_api.dto.response.ListAllContainersResponseDto;
+import czar.com.my.heroku.api.my_heroku_api.dto.response.ListImagesResponseDto;
 import czar.com.my.heroku.api.my_heroku_api.dto.response.ListRunningContainersResponseDto;
 import czar.com.my.heroku.api.my_heroku_api.plataform.OperatingSystem;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,8 @@ public class ContainerService {
     private static String DOCKER_PATH = "";
     public static final String LIST_RUNNING_CONTAINERS = "stats --no-stream --format \"{{.ID}}\\t{{.Name}}\\t{{.CPUPerc}}\\t{{.MemUsage}}\\t{{.MemPerc}}\"";
     public static final String LIST_ALL_CONTAINERS = "ps -a --format \"{{.ID}}\\t{{.Names}}\\t{{.Status}}\\t{{.Image}}\\t{{.Ports}}\"";
+    public static final String LIST_ALL_IMAGES = "image ls --format \"{{.Repository}}\\t{{.Tag}}\\t{{.ID}}\\t{{.Size}}\"";
+
 
     public ContainerService() {
         DOCKER_PATH = this.locateDockerBinary();
@@ -45,6 +48,19 @@ public class ContainerService {
                 String[] resultFields = result.split("\t");
                 String ports = resultFields.length > 4 && !resultFields[4].isBlank() ? resultFields[4] : "empty";
                 containerInfo.add(new ListAllContainersResponseDto(resultFields[0], resultFields[1], resultFields[2], resultFields[3], ports));
+            }
+        }
+        return containerInfo;
+    }
+
+    public List<ListImagesResponseDto> listAllImages() {
+        String dockerOutput = runDockerCommand(DOCKER_PATH + " " + LIST_ALL_IMAGES);
+        String[] lines = dockerOutput.split("\n");
+        List<ListImagesResponseDto> containerInfo = new ArrayList<>();
+        for(String result : lines) {
+            if(!result.isBlank()) {
+                String[] resultFields = result.split("\t");
+                containerInfo.add(new ListImagesResponseDto(resultFields[0], resultFields[1], resultFields[2], resultFields[3]));
             }
         }
         return containerInfo;
