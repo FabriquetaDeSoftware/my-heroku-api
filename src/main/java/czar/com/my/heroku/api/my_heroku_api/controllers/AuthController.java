@@ -19,28 +19,23 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto body) {
-        SignUpResponseDto response = authService.signUp(body);
+        SignUpResponseDto response = this.authService.signUp(body);
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/sign-in")
     public ResponseEntity<SignInResponseDto> signIn(@RequestBody SignInRequestDto body) {
-        SignInResponseDto response = authService.signIn(body);
+        SignInResponseDto response = this.authService.signIn(body);
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/refresh-token/{refreshToken}")
     public ResponseEntity<SignInResponseDto> refreshToken(@PathVariable("refreshToken") String param) {
-        SignInResponseDto response = authService.refreshToken(param);
+        SignInResponseDto response = this.authService.refreshToken(param);
 
         return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok("Success");
     }
 
 }
