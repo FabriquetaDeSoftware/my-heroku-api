@@ -46,8 +46,8 @@ public class ContainerController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/get-log-one-container/{containerId}")
-    public ResponseEntity<Boolean> getInfoOneContainer(@PathVariable("containerId") String containerId) {
+    @GetMapping("/get-logs-container/{containerId}")
+    public ResponseEntity<Boolean> getLogsContainer(@PathVariable("containerId") String containerId) {
         /*
         * change return type to have logs
         * */
@@ -71,10 +71,9 @@ public class ContainerController {
 
     @DeleteMapping("/delete-image/{imageId}")
     public ResponseEntity<Boolean> deleteImage(@PathVariable("imageId") String imageId) {
-        /*
-        * must have implementation
-        * */
-        return ResponseEntity.ok(Boolean.TRUE);
+        Boolean response = this.containerService.deleteImage(imageId);
+
+        return ResponseEntity.ok(response);
     }
 
 }

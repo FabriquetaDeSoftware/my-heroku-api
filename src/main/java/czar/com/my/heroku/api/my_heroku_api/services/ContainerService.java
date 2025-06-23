@@ -21,6 +21,7 @@ public class ContainerService {
     private static final String LIST_ALL_IMAGES = "image ls --format \"{{.Repository}}\\t{{.Tag}}\\t{{.ID}}\\t{{.Size}}\"";
     private static final String STOP_CONTAINER = "stop";
     private static final String START_CONTAINER = "start";
+    private static final String DELETE_IMAGE = "image rm";
 
     public ContainerService() {
         DOCKER_PATH = this.locateDockerBinary();
@@ -77,6 +78,12 @@ public class ContainerService {
             }
         }
         return containerInfo;
+    }
+
+    public Boolean deleteImage(String imageId) {
+        runDockerCommand(DOCKER_PATH + " " + DELETE_IMAGE + " " + imageId);
+
+        return Boolean.TRUE;
     }
 
     private String runDockerCommand(String command) {
