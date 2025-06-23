@@ -23,6 +23,7 @@ public class ContainerService {
     private static final String START_CONTAINER = "start";
     private static final String DELETE_IMAGE = "image rm";
     private static final String REMOVE_CONTAINER = "rm";
+    private static final String GET_CONTAINER_LOGS = "logs";
 
     public ContainerService() {
         DOCKER_PATH = this.locateDockerBinary();
@@ -78,6 +79,10 @@ public class ContainerService {
         }
 
         return Boolean.FALSE;
+    }
+
+    public String getContainerLogs(String containerId) {
+        return runDockerCommand(DOCKER_PATH + " " + GET_CONTAINER_LOGS + " " + containerId);
     }
 
     public List<ListImagesResponseDto> listAllImages() {

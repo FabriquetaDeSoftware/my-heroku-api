@@ -47,11 +47,10 @@ public class ContainerController {
     }
 
     @GetMapping("/get-logs-container/{containerId}")
-    public ResponseEntity<Boolean> getLogsContainer(@PathVariable("containerId") String containerId) {
-        /*
-        * change return type to have logs
-        * */
-        return ResponseEntity.ok(Boolean.TRUE);
+    public ResponseEntity<String> getLogsContainer(@PathVariable("containerId") String containerId) {
+        String response = this.containerService.getContainerLogs(containerId);
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/delete-container/{containerId}")
