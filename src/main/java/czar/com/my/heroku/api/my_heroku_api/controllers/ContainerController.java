@@ -56,10 +56,9 @@ public class ContainerController {
 
     @DeleteMapping("/delete-container/{containerId}")
     public ResponseEntity<Boolean> deleteContainer(@PathVariable("containerId") String containerId) {
-        /*
-         * must have implementation
-         * */
-        return ResponseEntity.ok(Boolean.TRUE);
+        Boolean response = this.containerService.deleteContainer(containerId);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/list-all-images")

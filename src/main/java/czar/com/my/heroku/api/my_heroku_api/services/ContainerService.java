@@ -22,6 +22,7 @@ public class ContainerService {
     private static final String STOP_CONTAINER = "stop";
     private static final String START_CONTAINER = "start";
     private static final String DELETE_IMAGE = "image rm";
+    private static final String REMOVE_CONTAINER = "rm";
 
     public ContainerService() {
         DOCKER_PATH = this.locateDockerBinary();
@@ -65,6 +66,18 @@ public class ContainerService {
         runDockerCommand(DOCKER_PATH + " " + START_CONTAINER + " " + containerId);
 
         return Boolean.TRUE;
+    }
+
+    public Boolean deleteContainer(String containerId) {
+        Boolean isStopped = this.stopContainer(containerId);
+
+        if(isStopped) {
+            runDockerCommand(DOCKER_PATH + " " + REMOVE_CONTAINER + " " + containerId);
+
+            return Boolean.TRUE;
+        }
+
+        return Boolean.FALSE;
     }
 
     public List<ListImagesResponseDto> listAllImages() {
