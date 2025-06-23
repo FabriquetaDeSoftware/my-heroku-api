@@ -16,10 +16,11 @@ import java.util.List;
 @Component
 public class ContainerService {
     private static String DOCKER_PATH = "";
-    public static final String LIST_RUNNING_CONTAINERS = "stats --no-stream --format \"{{.ID}}\\t{{.Name}}\\t{{.CPUPerc}}\\t{{.MemUsage}}\\t{{.MemPerc}}\"";
-    public static final String LIST_ALL_CONTAINERS = "ps -a --format \"{{.ID}}\\t{{.Names}}\\t{{.Status}}\\t{{.Image}}\\t{{.Ports}}\"";
-    public static final String LIST_ALL_IMAGES = "image ls --format \"{{.Repository}}\\t{{.Tag}}\\t{{.ID}}\\t{{.Size}}\"";
-
+    private static final String LIST_RUNNING_CONTAINERS = "stats --no-stream --format \"{{.ID}}\\t{{.Name}}\\t{{.CPUPerc}}\\t{{.MemUsage}}\\t{{.MemPerc}}\"";
+    private static final String LIST_ALL_CONTAINERS = "ps -a --format \"{{.ID}}\\t{{.Names}}\\t{{.Status}}\\t{{.Image}}\\t{{.Ports}}\"";
+    private static final String LIST_ALL_IMAGES = "image ls --format \"{{.Repository}}\\t{{.Tag}}\\t{{.ID}}\\t{{.Size}}\"";
+    private static final String STOP_CONTAINER = "stop";
+    private static final String START_CONTAINER = "start";
 
     public ContainerService() {
         DOCKER_PATH = this.locateDockerBinary();
@@ -51,6 +52,18 @@ public class ContainerService {
             }
         }
         return containerInfo;
+    }
+
+    public Boolean stopContainer(String containerId) {
+        runDockerCommand(DOCKER_PATH + " " + STOP_CONTAINER + " " + containerId);
+
+        return Boolean.TRUE;
+    }
+
+    public Boolean startContainer(String containerId) {
+        runDockerCommand(DOCKER_PATH + " " + START_CONTAINER + " " + containerId);
+
+        return Boolean.TRUE;
     }
 
     public List<ListImagesResponseDto> listAllImages() {

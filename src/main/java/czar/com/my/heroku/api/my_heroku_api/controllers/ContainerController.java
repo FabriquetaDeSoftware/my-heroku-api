@@ -34,18 +34,16 @@ public class ContainerController {
 
     @PatchMapping("/start-container/{containerId}")
     public ResponseEntity<Boolean> startContainer(@PathVariable("containerId") String containerId) {
-        /*
-         * must have implementation
-         * */
-        return ResponseEntity.ok(Boolean.TRUE);
+        Boolean response = this.containerService.startContainer(containerId);
+
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/pause-container/{containerId}")
     public ResponseEntity<Boolean> pauseContainer(@PathVariable("containerId") String containerId) {
-        /*
-         * must have implementation
-         * */
-        return ResponseEntity.ok(Boolean.TRUE);
+        Boolean response = this.containerService.stopContainer(containerId);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/get-log-one-container/{containerId}")
